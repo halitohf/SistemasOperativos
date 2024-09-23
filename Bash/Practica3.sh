@@ -3,8 +3,8 @@
 REMOTE_USER="so24p"
 REMOTE_HOST="pacifico.izt.uam.mx"
 SSH_KEY="~/.ssh/id_rsa_jlqf"
-REMOTE_COMMAND="who"
-OUTPUT_FILE="resultado.txt"
+REMOTE_COMMAND="lscpu | grep -E '^Core | mem'"
+OUTPUT_FILE="resultado2.txt"
 
 n=1
 while [ $n -le 6 ]; do

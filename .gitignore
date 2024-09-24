@@ -1,0 +1,5 @@
+#Texto
+*.txt
+#Compilaciones
+*.exe
+*.out

@@ -1,22 +1,26 @@
 #!/bin/bash
 
+# Variables proporcionadas
 REMOTE_USER="so24p"
 REMOTE_HOST="pacifico.izt.uam.mx"
 SSH_KEY="~/.ssh/id_rsa_jlqf"
-REMOTE_COMMAND="w"
-OUTPUT_FILE="resultado.txt"
+OUTPUT_FILE="resultado2.txt"
+INTERVALO_MINUTOS=1  # Cambia esto al intervalo en minutos que desees
 
-n=1
-while [ $n -le 10 ]; do
+# Función para monitorear usuarios en el servidor remoto
+monitorear_usuarios() {
+    # Guardar la hora de monitoreo
+    echo "Usuarios conectados en $REMOTE_HOST:" >> $OUTPUT_FILE
+    
+    # Ejecutar el comando remoto para listar usuarios conectados y guardar en el archivo
+    ssh -i $SSH_KEY $REMOTE_USER@$REMOTE_HOST "who" >> $OUTPUT_FILE
+    
+    echo "-------------------------" >> $OUTPUT_FILE
+    
+}
 
-ssh -i "${SSH_KEY}" "${REMOTE_USER}@${REMOTE_HOST}" "${REMOTE_COMMAND}" >> "${OUTPUT_FILE}"
-sleep 1m
-let n++
+# Monitoreo continuo cada X minutos
+while true; do
+    monitorear_usuarios
+    sleep $((INTERVALO_MINUTOS * 60))  # Convierte los minutos a segundos
 done
-
-
-if [ $? -eq 0 ]; then
-echo "Exito: ${OUTPUT_FILE}"
-else 
-echo "Error"
-fi
